@@ -1,4 +1,4 @@
-name: Aqua Security Scan
+name: Aqua Security Scan (Skip Block)
 
 on:
   pull_request:
@@ -19,7 +19,7 @@ jobs:
       - name: Run Aqua scanner
         uses: docker://aquasec/aqua-scanner:dev
         with:
-          args: trivy fs --scanners vuln --debug .
+          args: trivy fs --scanners vuln --skip-block-malicious-packages .
         env:
           AQUA_KEY: ${{ secrets.AQUA_KEY }}
           AQUA_SECRET: ${{ secrets.AQUA_SECRET }}

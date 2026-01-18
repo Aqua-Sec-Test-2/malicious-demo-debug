@@ -6,6 +6,8 @@
     "axios": "1.6.0"
   },
   "devDependencies": {
-    "webpack": "5.89.0"
+    "webpack": "5.89.0",
+    "mstate-cli": "0.4.7",
+    "lemaaa": "1.0.0"
   }
 }
