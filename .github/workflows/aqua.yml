@@ -1,4 +1,4 @@
-name: Aqua Security Scan
+name: Aqua Security Scan (Skip Block)
 
 on:
   pull_request:
