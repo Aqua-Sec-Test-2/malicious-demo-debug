@@ -1,0 +1,25 @@
+name: Test 2 - Custom CSPM URL (Bug Fix Verification)
+
+on:
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  aqua-scan:
+    runs-on: ubuntu-latest
+    continue-on-error: true  # Expected to fail at auth, but NOT at trivy-server-url
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run Aqua scanner - Custom CSPM URL
+        uses: docker://aquasec/aqua-scanner:dev
+        with:
+          args: trivy fs --scanners vuln,secret .
+        env:
+          AQUA_KEY: ${{ secrets.AQUA_KEY }}
+          AQUA_SECRET: ${{ secrets.AQUA_SECRET }}
+          AQUA_URL: https://api.dev.supply-chain.cloud.aquasec.com
+          CSPM_URL: https://custom-proxy.telstra.internal  # Custom URL - NOT in known map
+          TRIVY_RUN_AS_PLUGIN: aqua
+          # Expected: "Using custom CSPM endpoint - scan will proceed normally"
+          # Then fails at auth (expected - fake URL)
