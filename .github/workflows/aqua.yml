@@ -1,4 +1,4 @@
-name: Test 2 - Custom CSPM URL (Bug Fix)
+name: Aqua Security Scan - Custom CSPM
 
 on:
   pull_request:
@@ -19,11 +19,11 @@ jobs:
       - name: Run Aqua scanner
         uses: docker://aquasec/aqua-scanner:dev
         with:
-          args: trivy fs --sast --debug --security-checks vuln,secret .
+          args: trivy fs --sast --scanners vuln,secret .
         env:
           AQUA_KEY: ${{ secrets.AQUA_KEY }}
           AQUA_SECRET: ${{ secrets.AQUA_SECRET }}
           AQUA_URL: https://api.dev.supply-chain.cloud.aquasec.com
           CSPM_URL: https://custom-proxy.telstra.internal
-          GITHUB_TOKEN: ${{ secrets.GHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ github.token }}
           TRIVY_RUN_AS_PLUGIN: aqua
