@@ -1,4 +1,4 @@
-name: Aqua Security Scan
+name: Test - Real URLs with Manual TRIVY_SERVER_URL
 
 on:
   pull_request:
@@ -19,11 +19,12 @@ jobs:
       - name: Run Aqua scanner
         uses: docker://aquasec/aqua-scanner:dev
         with:
-          args: trivy fs --sast --debug --security-checks vuln,secret .
+          args: trivy fs --scanners vuln,secret .
         env:
           AQUA_KEY: ${{ secrets.AQUA_KEY }}
           AQUA_SECRET: ${{ secrets.AQUA_SECRET }}
           AQUA_URL: https://api.dev.supply-chain.cloud.aquasec.com
           CSPM_URL: https://stage.api.cloudsploit.com
-          GITHUB_TOKEN: ${{ secrets.GHUB_TOKEN }}
+          TRIVY_SERVER_URL: https://us-east-1.staging.edge.cloud.aquasec.com/
+          GITHUB_TOKEN: ${{ github.token }}
           TRIVY_RUN_AS_PLUGIN: aqua
