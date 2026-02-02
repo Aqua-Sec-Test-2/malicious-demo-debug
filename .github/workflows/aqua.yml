@@ -1,4 +1,4 @@
-name: Aqua Security Scan
+name: Test - Invalid AQUA_REGION
 
 on:
   pull_request:
@@ -19,11 +19,12 @@ jobs:
       - name: Run Aqua scanner
         uses: docker://aquasec/aqua-scanner:dev
         with:
-          args: trivy fs --sast --debug --security-checks vuln,secret .
+          args: trivy fs --scanners vuln,secret .
         env:
           AQUA_KEY: ${{ secrets.AQUA_KEY }}
           AQUA_SECRET: ${{ secrets.AQUA_SECRET }}
           AQUA_URL: https://api.dev.supply-chain.cloud.aquasec.com
-          CSPM_URL: https://stage.api.cloudsploit.com
-          GITHUB_TOKEN: ${{ secrets.GHUB_TOKEN }}
+          CSPM_URL: https://custom-proxy.example.com
+          AQUA_REGION: invalid-region
+          GITHUB_TOKEN: ${{ github.token }}
           TRIVY_RUN_AS_PLUGIN: aqua
